@@ -17,6 +17,7 @@ export default function MapaConcellos() {
     const [intentos, setIntentos] = useState(0);
     const [isMounted, setIsMounted] = useState(false);
     const [acertados, setAcertados] = useState<Record<string, string>>({});
+    const [clickInfo, setClickInfo] = useState<{ id: string, x: number, y: number, key: number } | null>(null);
     // Esto guardará algo como: { "Vigo": "#ffffff", "Lugo": "#facc15" }
 
     useEffect(() => {
@@ -49,6 +50,12 @@ export default function MapaConcellos() {
 
         const idPulsado = target.id;
 
+        const timestamp = Date.now();
+        setClickInfo({ id: idPulsado, x: e.clientX, y: e.clientY, key: timestamp });
+        setTimeout(() => {
+            setClickInfo(prev => prev?.key === timestamp ? null : prev);
+        }, 750);
+
 
         if (idPulsado === objetivo) {
             // DETERMINAR COLOR SEGÚN INTENTOS
@@ -72,6 +79,8 @@ export default function MapaConcellos() {
             nuevaPregunta(listaActualizada);
         } else {
             // Si falla, aumentamos el contador de intentos
+            if (acertados[idPulsado]) return;
+
             setIntentos(prev => prev + 1);
 
             // Si es el tercer fallo (cuarto intento), le damos una pista visual
@@ -108,7 +117,25 @@ export default function MapaConcellos() {
           ${Object.entries(acertados)
                             .map(([id, color]) => `#${id.replace(/\s+/g, '\\ ')} { fill: ${color} !important; }`)
                             .join('\n')}
+          @keyframes floatFade {
+              0% { opacity: 1; transform: translate(-50%, -50%); }
+              80% { opacity: 1; transform: translate(-50%, -100%); }
+              100% { opacity: 0; transform: translate(-50%, -120%); }
+          }
                 `}</style>
+                )}
+                {clickInfo && (
+                    <div
+                        key={clickInfo.key}
+                        className="fixed pointer-events-none z-50 bg-[#37915a] text-white px-3 py-1 rounded-md text-sm font-bold shadow-md border border-white/20"
+                        style={{
+                            left: clickInfo.x,
+                            top: clickInfo.y,
+                            animation: 'floatFade 750ms ease-out forwards'
+                        }}
+                    >
+                        {clickInfo.id}
+                    </div>
                 )}
                 <svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" viewBox="0 0 800 619" strokeLinecap="round" strokeLinejoin="round" className="w-full h-auto max-h-[70vh] md:max-h-full">
                     <g id="Municipios_-7023933172321596289" className="

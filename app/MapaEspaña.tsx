@@ -1,14 +1,58 @@
 // src/app/MapaEspaña.tsx
 "use client"; // Muy importante para que luego puedas hacer clicks
+import { useState, useEffect } from 'react';
 
 export default function MapaEspaña() {
+    const [isMounted, setIsMounted] = useState(false);
+    const [clickInfo, setClickInfo] = useState<{ id: string, x: number, y: number, key: number } | null>(null);
+
+    useEffect(() => {
+        setIsMounted(true);
+    }, []);
+
+    const manejarClic = (e: React.MouseEvent<SVGGElement>) => {
+        const target = e.target as SVGElement;
+        // Solo nos interesa si es un path
+        if (target.tagName !== 'path') return;
+
+        const idPulsado = target.getAttribute('name') || target.id; // En España usa el atributo name para la comunidad, si no hay name usa el id
+
+        const timestamp = Date.now();
+        setClickInfo({ id: idPulsado, x: e.clientX, y: e.clientY, key: timestamp });
+        setTimeout(() => {
+            setClickInfo(prev => prev?.key === timestamp ? null : prev);
+        }, 750);
+    };
     return (
-        <div className="flex justify-center items-center p-2 md:p-4 bg-[#95bec8] w-full max-w-4xl mx-auto rounded-lg shadow-md">
+        <div className="flex justify-center items-center p-2 md:p-4 bg-[#95bec8] w-full max-w-4xl mx-auto rounded-lg shadow-md relative overflow-hidden">
+            {isMounted && (
+                <style>{`
+          @keyframes floatFade {
+              0% { opacity: 1; transform: translate(-50%, -50%); }
+              80% { opacity: 1; transform: translate(-50%, -100%); }
+              100% { opacity: 0; transform: translate(-50%, -120%); }
+          }
+                `}</style>
+            )}
+            {clickInfo && (
+                <div
+                    key={clickInfo.key}
+                    className="fixed pointer-events-none z-50 bg-[#37915a] text-white px-3 py-1 rounded-md text-sm font-bold shadow-md border border-white/20"
+                    style={{
+                        left: clickInfo.x,
+                        top: clickInfo.y,
+                        animation: 'floatFade 750ms ease-out forwards'
+                    }}
+                >
+                    {clickInfo.id}
+                </div>
+            )}
             {/* PEGA TU <svg> AQUÍ ABAJO */}
             <svg
                 viewBox="370 -50 600 550" // Asegúrate de que tenga su viewBox original
                 className="w-full h-auto max-h-[60vh] md:max-h-[80vh]" // Clases de Tailwind para que sea responsivo
                 xmlns="http://www.w3.org/2000/svg"
+                onClick={manejarClic}
             >
 
                 <g className="
