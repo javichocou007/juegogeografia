@@ -1,5 +1,5 @@
 "use client"; // Muy importante para que luego puedas hacer clicks
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 
 export default function MapaConcellos() {
     const CONCELLOS_GALICIA = ["Moeche", "Monfero", "Mugardos", "Muxía", "Muros", "Narón", "Neda", "Negreira", "Noia", "Oleiros", "Ordes", "Oroso", "Ortigueira", "Outes", "Paderne", "Padrón", "O Pino", "A Pobra do Caramiñal", "Ponteceso", "Pontedeume", "As Pontes de García Rodríguez", "Porto do Son", "Rianxo", "Ribeira", "Val do Dubra", "Rois", "Sada", "San Sadurniño", "Santa Comba", "Santiago de Compostela", "Santiso", "Sobrado", "As Somozas", "Teo", "Toques", "Tordoia", "Touro", "Trazo", "Valdoviño", "Vedra", "Vilasantar", "Vilarmaior", "Vimianzo", "Zas", "Cariño", "Oza-Cesuras", "Abadín", "Alfoz", "Antas de Ulla", "Baleira", "Barreiros", "Becerreá", "Begonte", "Bóveda", "Carballedo", "Castro de Rei", "Castroverde", "Cervantes", "Cervo", "O Corgo", "Cospeito", "Chantada", "Folgoso do Courel", "A Fonsagrada", "Foz", "Friol", "Xermade", "Guitiriz", "Guntín", "O Incio", "Xove", "Láncara", "Lourenzá", "Lugo", "Meira", "Mondoñedo", "Monforte de Lemos", "Monterroso", "Muras", "Navia de Suarna", "Negueira de Muñiz", "As Nogais", "Ourol", "Outeiro de Rei", "Palas de Rei", "Pantón", "Paradela", "O Páramo", "A Pastoriza", "Pedrafita do Cebreiro", "Pol", "A Pobra do Brollón", "A Pontenova", "Portomarín", "Quiroga", "Ribadeo", "Ribas de Sil", "Ribeira de Piquín", "Riotorto", "Samos", "Rábade", "Sarria", "O Saviñao", "Sober", "Taboada", "Trabada", "Triacastela", "O Valadouro", "O Vicedo", "Vilalba", "Viveiro", "Baralla", "Burela", "Allariz", "Amoeiro", "A Arnoia", "Avión", "Baltar", "Bande", "Baños de Molgas", "Barbadás", "O Barco de Valdeorras", "Beade", "Beariz", "Os Blancos", "Boborás", "A Bola", "O Bolo", "Calvos de Randín", "Carballeda de Valdeorras", "Carballeda de Avia", "O Carballiño", "Cartelle", "Castrelo do Val", "Castrelo de Miño", "Castro Caldelas", "Celanova", "Cenlle", "Coles", "Cortegada", "Cualedro", "Chandrexa de Queixa", "Entrimo", "Esgos", "Xinzo de Limia", "Gomesende", "A Gudiña", "O Irixo", "Xunqueira de Ambía", "Xunqueira de Espadanedo", "Larouco", "Laza", "Leiro", "Lobeira", "Lobios", "Maceda", "Manzaneda", "Maside", "Melón", "A Merca", "A Mezquita", "Montederramo", "Monterrei", "Muíños", "Nogueira de Ramuín", "Oímbra", "Ourense", "Paderne de Allariz", "Padrenda", "Parada de Sil", "O Pereiro de Aguiar", "A Peroxa", "Petín", "Piñor", "Porqueira", "A Pobra de Trives", "Pontedeva", "Punxín", "Quintela de Leirado", "Rairiz de Veiga", "Ramirás", "Ribadavia", "San Xoán de Río", "Riós", "A Rúa", "Rubiá", "San Amaro", "San Cibrao das Viñas", "San Cristovo de Cea", "Sandiás", "Sarreaus", "Taboadela", "A Teixeira", "Toén", "Trasmiras", "A Veiga", "Verea", "Verín", "Viana do Bolo", "Vilamarín", "Vilamartín de Valdeorras", "Vilar de Barrio", "Vilar de Santos", "Vilardevós", "Vilariño de Conso", "Arbo", "Barro", "Baiona", "Bueu", "Caldas de Reis", "Cambados", "Campo Lameiro", "Cangas", "A Cañiza", "Catoira", "Covelo", "Crecente", "Cuntis", "Dozón", "A Estrada", "Forcarei", "Fornelos de Montes", "Agolada", "Gondomar", "O Grove", "A Guarda", "Lalín", "A Lama", "Marín", "Meaño", "Meis", "Moaña", "Mondariz", "Mondariz-Balneario", "Moraña", "Mos", "As Neves", "Nigrán", "Oia", "Pazos de Borbén", "Pontevedra", "O Porriño", "Portas", "Poio", "Ponteareas", "Ponte Caldelas", "Pontecesures", "Redondela", "Ribadumia", "Rodeiro", "O Rosal", "Salceda de Caselas", "Salvaterra de Miño", "Sanxenxo", "Silleda", "Soutomaior", "Tomiño", "Tui", "Valga", "Vigo", "Vilaboa", "Vila de Cruces", "Vilagarcía de Arousa", "Vilanova de Arousa", "A Illa de Arousa", "Cerdedo-Cotobade", "Melide", "Mesía", "Miño", "Abegondo", "Ames", "Aranga", "Ares", "Arteixo", "Arzúa", "Cambre", "A Capela", "Carballo", "Carnota", "Carral", "Cedeira", "Cee", "Dodro", "Dumbría", "Fene", "Ferrol", "Fisterra", "Frades", "Irixoa", "Laxe", "A Laracha", "A Baña", "Bergondo", "Betanzos", "Boimorto", "Boiro", "Boqueixón", "Brión", "Cabana de Bergantiños", "Cabanas", "Camariñas", "Cerceda", "Cerdido", "Coirós", "Corcubión", "Coristanco", "A Coruña", "Culleredo", "Curtis", "Lousame", "Malpica de Bergantiños", "Mañón", "Mazaricos"];
@@ -20,8 +20,13 @@ export default function MapaConcellos() {
     const [clickInfo, setClickInfo] = useState<{ id: string, x: number, y: number, key: number, scale: number } | null>(null);
     // Esto guardará algo como: { "Vigo": "#ffffff", "Lugo": "#facc15" }
 
+    const audioCorrectRef = useRef<HTMLAudioElement | null>(null);
+    const audioIncorrectRef = useRef<HTMLAudioElement | null>(null);
+
     useEffect(() => {
         setIsMounted(true);
+        audioCorrectRef.current = new Audio('/correct.mp3');
+        audioIncorrectRef.current = new Audio('/incorrect.mp3');
     }, []);
 
     const [disponibles, setDisponibles] = useState([...CONCELLOS_GALICIA]);
@@ -59,7 +64,10 @@ export default function MapaConcellos() {
 
 
         if (idPulsado === objetivo) {
-            new Audio('/correct.mp3').play().catch(e => console.error("Error reproduciendo audio:", e));
+            if (audioCorrectRef.current) {
+                audioCorrectRef.current.currentTime = 0;
+                audioCorrectRef.current.play().catch(e => console.error("Error reproduciendo audio:", e));
+            }
             // DETERMINAR COLOR SEGÚN INTENTOS
             let colorFinal = COLORES.blanco;
             if (intentos === 1) colorFinal = COLORES.amarillo;
@@ -85,7 +93,10 @@ export default function MapaConcellos() {
             // Si falla, aumentamos el contador de intentos
             if (acertados[idPulsado]) return;
 
-            new Audio('/incorrect.mp3').play().catch(e => console.error("Error reproduciendo audio:", e));
+            if (audioIncorrectRef.current) {
+                audioIncorrectRef.current.currentTime = 0;
+                audioIncorrectRef.current.play().catch(e => console.error("Error reproduciendo audio:", e));
+            }
 
             setIntentos(prev => prev + 1);
 
