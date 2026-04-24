@@ -84,10 +84,10 @@ export default function MapaConcellos() {
     };
 
     return (
-        <div className="grid grid-cols-[25%_1fr] h-screen w-full">
-            <div className='flex items-center p-3'>
+        <div className="flex flex-col md:grid md:grid-cols-[25%_1fr] h-full min-h-[70vh] flex-1 w-full gap-2 md:gap-4">
+            <div className='flex items-center justify-center p-2 md:p-3 shrink-0'>
 
-                <div className="flex flex-col justify-center bg-[#0c2151]/80 rounded-lg p-3 gap-2  w-[100%] font-bold text-center">
+                <div className="flex flex-col justify-center bg-[#0c2151]/80 rounded-lg p-3 gap-2 w-full font-bold text-center">
 
                     <div className=" text-xl bg-[#0c2151] mx-auto p-2 rounded-lg border-white border-1">
 
@@ -99,7 +99,7 @@ export default function MapaConcellos() {
                     </div>
                 </div>
             </div>
-            < div className="flex justify-center items-center p-4 bg-[#95bec8] w-[75%] py-2 rounded-lg" >
+            <div className="flex justify-center items-center p-2 md:p-4 bg-[#95bec8] w-full flex-1 md:rounded-lg overflow-hidden">
 
                 {/* PEGA TU <svg> AQUÍ ABAJO */}
 
@@ -110,7 +110,7 @@ export default function MapaConcellos() {
                             .join('\n')}
                 `}</style>
                 )}
-                <svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" width="800" height="619" viewBox="0 0 800 619" strokeLinecap="round" strokeLinejoin="round">
+                <svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" viewBox="0 0 800 619" strokeLinecap="round" strokeLinejoin="round" className="w-full h-auto max-h-[70vh] md:max-h-full">
                     <g id="Municipios_-7023933172321596289" className="
                     [&>path]:fill-[#1e8346] 
                     [&>path]:stroke-[#95bec8] 

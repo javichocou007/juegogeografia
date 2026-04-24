@@ -3,11 +3,11 @@
 
 export default function MapaEspaña() {
     return (
-        <div className="flex justify-center items-center p-4 bg-[#95bec8] w-3xl">
+        <div className="flex justify-center items-center p-2 md:p-4 bg-[#95bec8] w-full max-w-4xl mx-auto rounded-lg shadow-md">
             {/* PEGA TU <svg> AQUÍ ABAJO */}
             <svg
                 viewBox="370 -50 600 550" // Asegúrate de que tenga su viewBox original
-                className="w-full h-auto max-w-3xl" // Clases de Tailwind para que sea responsivo
+                className="w-full h-auto max-h-[60vh] md:max-h-[80vh]" // Clases de Tailwind para que sea responsivo
                 xmlns="http://www.w3.org/2000/svg"
             >
 
