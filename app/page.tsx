@@ -1,5 +1,3 @@
-import Image from "next/image";
-import MapaEspaña from "./MapaEspaña";
 import MapaConcellos from "./MapaConcellos";
 
 export default function Home() {
