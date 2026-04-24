@@ -168,9 +168,9 @@ export default function MapaConcellos() {
         <div className="flex flex-col md:grid md:grid-cols-[25%_1fr] h-full min-h-[70vh] flex-1 w-full gap-2 md:gap-4">
             <div className='flex items-center justify-center p-2 md:p-3 shrink-0'>
 
-                <div className="flex flex-col justify-center bg-[#0c2151]/80 rounded-lg p-3 gap-2 w-full font-bold text-center">
+                <div className="flex flex-col justify-center text-white bg-[#0c2151]/80 rounded-lg p-3 gap-2 w-full font-bold text-center">
 
-                    <div className=" text-xl bg-[#0c2151] mx-auto p-2 rounded-lg border-white border-1">
+                    <div className=" text-xl text-white bg-[#0c2151] mx-auto p-2 rounded-lg border-white border-1">
 
                         {objetivo}
                     </div>
@@ -180,7 +180,7 @@ export default function MapaConcellos() {
                     </div>
                 </div>
             </div>
-            <div ref={mapContainerRef} className="flex justify-center items-center p-2 md:p-4 bg-[#95bec8] w-full flex-1 md:rounded-lg overflow-hidden">
+            <div ref={mapContainerRef} className="flex justify-center items-center p-2 md:p-4 bg-[#95bec8] w-full aspect-[800/619] md:aspect-auto md:flex-1 md:rounded-lg overflow-hidden">
 
                 {isMounted && (
                     <style>{`
