@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 
 export default function MapaEspaña() {
     const [isMounted, setIsMounted] = useState(false);
-    const [clickInfo, setClickInfo] = useState<{ id: string, x: number, y: number, key: number } | null>(null);
+    const [clickInfo, setClickInfo] = useState<{ id: string, x: number, y: number, key: number, scale: number } | null>(null);
 
     useEffect(() => {
         setIsMounted(true);
@@ -17,8 +17,9 @@ export default function MapaEspaña() {
 
         const idPulsado = target.getAttribute('name') || target.id; // En España usa el atributo name para la comunidad, si no hay name usa el id
 
+        const currentScale = window.visualViewport ? window.visualViewport.scale : 1;
         const timestamp = Date.now();
-        setClickInfo({ id: idPulsado, x: e.clientX, y: e.clientY, key: timestamp });
+        setClickInfo({ id: idPulsado, x: e.clientX, y: e.clientY, key: timestamp, scale: currentScale });
         setTimeout(() => {
             setClickInfo(prev => prev?.key === timestamp ? null : prev);
         }, 750);
@@ -28,9 +29,9 @@ export default function MapaEspaña() {
             {isMounted && (
                 <style>{`
           @keyframes floatFade {
-              0% { opacity: 1; transform: translate(-50%, -50%); }
-              80% { opacity: 1; transform: translate(-50%, -100%); }
-              100% { opacity: 0; transform: translate(-50%, -120%); }
+              0% { opacity: 1; transform: translate(-50%, -50%) scale(var(--zoom-scale, 1)); }
+              80% { opacity: 1; transform: translate(-50%, -100%) scale(var(--zoom-scale, 1)); }
+              100% { opacity: 0; transform: translate(-50%, -120%) scale(var(--zoom-scale, 1)); }
           }
                 `}</style>
             )}
@@ -41,8 +42,9 @@ export default function MapaEspaña() {
                     style={{
                         left: clickInfo.x,
                         top: clickInfo.y,
-                        animation: 'floatFade 750ms ease-out forwards'
-                    }}
+                        animation: 'floatFade 750ms ease-out forwards',
+                        '--zoom-scale': 1 / clickInfo.scale
+                    } as React.CSSProperties}
                 >
                     {clickInfo.id}
                 </div>
