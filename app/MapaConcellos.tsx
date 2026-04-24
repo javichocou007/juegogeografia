@@ -73,7 +73,9 @@ export default function MapaConcellos() {
             // Guardamos esa lista en el estado para el futuro
             setDisponibles(listaActualizada);
 
-            setPuntos(prev => prev + 1);
+            if (intentos <= 2) {
+                setPuntos(prev => prev + 1);
+            }
 
             // Resetear para el próximo concello
             setIntentos(0);
