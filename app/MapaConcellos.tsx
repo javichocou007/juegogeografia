@@ -58,6 +58,7 @@ export default function MapaConcellos() {
 
 
         if (idPulsado === objetivo) {
+            new Audio('/correct.mp3').play().catch(e => console.error("Error reproduciendo audio:", e));
             // DETERMINAR COLOR SEGÚN INTENTOS
             let colorFinal = COLORES.blanco;
             if (intentos === 1) colorFinal = COLORES.amarillo;
@@ -80,6 +81,8 @@ export default function MapaConcellos() {
         } else {
             // Si falla, aumentamos el contador de intentos
             if (acertados[idPulsado]) return;
+
+            new Audio('/incorrect.mp3').play().catch(e => console.error("Error reproduciendo audio:", e));
 
             setIntentos(prev => prev + 1);
 
