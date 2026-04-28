@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Concellos de Galicia",
   description: "Juego  de geografia para aprender los concellos de galicia y sus posiciones",
-  keywords: ['Juego geografia', 'Concellos galicia', 'Municipios galicia', 'Mapa concellos galicia', 'Aprender concellos galicia'],
+  keywords: ['Juego geografia', 'Concellos galicia', 'Juego geografia concellos galicia', 'Juego geografia municipios galicia', 'Municipios galicia', 'Mapa concellos galicia', 'Aprender concellos galicia', 'Juego geografía Galicia'],
 };
 
 export default function RootLayout({
